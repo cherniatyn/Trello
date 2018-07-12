@@ -1,0 +1,36 @@
+body {
+    background: aquamarine;
+}
+
+.content {
+    display: flex;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    background: #e9e9eb;
+}
+
+.group .card {
+    margin: 10px;
+    width: 300px;
+    height: 100px;
+    background: snow;
+}
+
+.group .header,
+.group .footer {
+    font-family: "Libre Barcode 128 Text", cursive;
+    font-size: 50px;
+    margin: 5px 10px;
+}
+
+.group .header {
+    opacity: 0.5;
+}
+
+.group .footer {
+    
+}
