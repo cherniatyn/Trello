@@ -1,12 +1,30 @@
 ;(function() {
     var cards = [];
-    var group = document.getElementsByClassName('group')[0];
-    
-    console.log(group);
+    var groupElement = document.getElementsByClassName('group')[0];
+    var addCardElement = groupElement.children[groupElement.children.length - 1];
 
-    group.innerHTML = `
-    <span class="header">header</span>
-    <span class="footer">footer</span>`
+    var removeCard = (event) => groupElement.removeChild(cards.splice(cards.indexOf(event.target.parentElement), 1)[0]);
 
-    // group.appendChild(`<div class="card"></div>`);
+    var getRemoveBlock = function () {
+        var removeBlockTemplate = document.createElement("span");
+        removeBlockTemplate.className = "card-remove";
+        removeBlockTemplate.innerText = "x";
+
+        removeBlockTemplate.addEventListener("click", removeCard, false);
+        return removeBlockTemplate;
+    };
+
+    var createNewCard = function () {
+        var cardTemplate = document.createElement("div");
+        cardTemplate.className = "card";
+        cardTemplate.innerText = cards.length;
+        cardTemplate.appendChild(getRemoveBlock());
+        cards.push(cardTemplate);
+
+        // groupElement.childNodes = cards;
+
+        groupElement.insertBefore(cardTemplate, addCardElement);
+    };
+
+    addCardElement.addEventListener("click", createNewCard, false);
 })();

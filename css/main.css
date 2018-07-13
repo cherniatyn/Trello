@@ -18,6 +18,8 @@ body {
     width: 300px;
     height: 100px;
     background: snow;
+    position: relative;
+    overflow: hidden;
 }
 
 .group .header,
@@ -32,5 +34,30 @@ body {
 }
 
 .group .footer {
-    
+    border: 1px;
+    border-radius: 2px;
+    border-color: burlywood;
+}
+
+.group .footer:hover {
+    cursor: pointer;
+    background-color: goldenrod;
+}
+
+.group .card .card-remove {
+    /* width: 10px;
+    height: 10px; */
+    margin: 2px;
+    padding: 0;
+    position: relative;
+    float: right;
+    background-color: blanchedalmond;
+
+    color: rgb(250, 1, 1);
+    font-weight: 300;
+    font-family: Arial, sans-serif;
+}
+
+.group .card .card-remove:hover {
+    cursor: pointer;
 }
