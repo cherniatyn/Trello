@@ -11,53 +11,96 @@ body {
     flex-direction: column;
     margin: 10px;
     background: #e9e9eb;
-}
 
-.group .card {
-    margin: 10px;
-    width: 300px;
-    height: 100px;
-    background: snow;
-    position: relative;
-    overflow: hidden;
-}
+    .card {
+        margin: 10px;
+        width: 300px;
+        height: 100px;
+        background: snow;
+        position: relative;
+        overflow: hidden;
+        border-radius: 3px;
 
-.group .header,
-.group .footer {
-    font-family: "Libre Barcode 128 Text", cursive;
-    font-size: 50px;
-    margin: 5px 10px;
-}
+        .card-remove {
+            /* width: 10px;
+            height: 10px; */
+            margin: 2px;
+            padding: 0;
+            position: relative;
+            float: right;
+            background-color: blanchedalmond;
+            z-index: 2;
+        
+            color: rgb(250, 1, 1);
+            font-weight: 300;
+            font-family: Arial, sans-serif;
 
-.group .header {
-    opacity: 0.5;
-}
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
 
-.group .footer {
-    border: 1px;
-    border-radius: 2px;
-    border-color: burlywood;
-}
+    .header,
+    .footer {
+        font-family: "Libre Barcode 128 Text", cursive;
+        font-size: 50px;
+        margin: 5px 10px;
+    }
 
-.group .footer:hover {
-    cursor: pointer;
-    background-color: goldenrod;
-}
+    .header {
+        opacity: 0.5;
+    }
 
-.group .card .card-remove {
-    /* width: 10px;
-    height: 10px; */
-    margin: 2px;
-    padding: 0;
-    position: relative;
-    float: right;
-    background-color: blanchedalmond;
+    .footer {
+        border: 1px;
+        border-radius: 2px;
+        border-color: burlywood;
+    }
 
-    color: rgb(250, 1, 1);
-    font-weight: 300;
-    font-family: Arial, sans-serif;
-}
+    .footer:hover {
+        cursor: pointer;
+        background-color: goldenrod;
+    }
 
-.group .card .card-remove:hover {
-    cursor: pointer;
+    .card-content {
+        position: relative;
+        padding: 5px;
+
+        .sub-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &.moreActions {
+                font-weight: 600;
+                font-size: 20px;
+                vertical-align: middle;
+                text-align: center;
+            }
+
+            &.ico {
+                max-width: 50px;
+                max-height: 50px;
+            }
+        }
+
+        &.title {
+            margin: 0;
+            padding: 0;
+        }
+
+        &.progress {
+            
+            border: 0;
+            height: 20px;
+            border-radius: 2px;
+            &::-webkit-progress-bar {
+                background-color: lightgreen;
+            }
+            &::-webkit-progress-value {
+                background-color: aqua;
+            }
+        }
+    }
 }
