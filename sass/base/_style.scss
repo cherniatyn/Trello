@@ -5,6 +5,9 @@ body {
 .content {
     display: flex;
 }
+.container.fluid {
+    max-width: 1140px;
+}
 
 .group {
     display: flex;

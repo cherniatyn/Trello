@@ -1,0 +1,18 @@
+$mq-support: true;
+$mq-fixed-value: false;
+@import "base/custom";
+@import "base/var";
+@import "base/style";
+
+.widthrow{
+    height: 200px;
+    background-color: brown;
+    margin: 10px;
+    padding: 10px;
+}
+.heightcol {
+    width: 200px;
+    background-color: blue;
+    margin: 10px;
+    padding: 10px;
+}
