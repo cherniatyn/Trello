@@ -1,13 +1,35 @@
 (function () {
 	var cards = [];
-	var groupElement = document.getElementsByClassName('group')[0];
-	var addCardElement = groupElement.children[groupElement.children.length - 1];
+	var addCardElements = [];
+
 	var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
 		'July', 'August', 'September', 'October', 'November', 'December'];
+		
+	var cardDragStart = function(event) {
+		var card = event.path.find(function(value) {
+			if (value.className ==='card')
+				return true;
+		});
+
+		event.dataTransfer.setData('elem', card.id);
+	};
+
+	var cardDrop = function(event) {
+		var card = event.dataTransfer.getData('elem');
+
+		var group = event.path.find(function(value) {
+			if (value.className ==='group')
+				return true;
+		});
+
+		group.insertBefore(document.getElementById(card), group.children[group.children.length - 1]);
+	};
 
 	var removeCard = function(event) {
-		return groupElement.removeChild(cards.splice(cards.indexOf(event.target.parentElement), 1)[0]);
+		var card = event.target.parentElement;
+		//card.removeEventListener('ondragstart', cardDragStart, false);
+		return card.parentElement.removeChild(cards.splice(cards.indexOf(card), 1)[0]);
 	}; 
 
 	var getRemoveBlock = function () {
@@ -23,7 +45,7 @@
 		return weekday[date.getDay()] + ', ' + date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' +  (date.getYear() + 1900);
 	};
 
-	var getCardContent = function () {
+	var getCardContent = function (id) {
 		var cardContent = document.createElement('div');
 		cardContent.classList.toggle('card-content');
 
@@ -35,7 +57,7 @@
 
 		var titleElement = document.createElement('h2');
 		titleElement.className = 'card-content title';
-		titleElement.innerText = 'Title';
+		titleElement.innerText = 'Title' + id;
 
 		cardContent.appendChild(titleElement);
 
@@ -66,23 +88,42 @@
 		return cardContent;
 	};
 
-	var createNewCard = function () {
+	var createNewCard = function (event) {
 		var cardTemplate = document.createElement('div');
 		cardTemplate.classList.toggle('card');
-		// cardTemplate.innerText = cards.length;
+		cardTemplate.draggable = true;
+		cardTemplate.ondragstart = cardDragStart;
+		//cardTemplate.addEventListener('ondragstart', cardDragStart, false);
+		cardTemplate.id = cards.length;
 		cardTemplate.appendChild(getRemoveBlock());
-		cardTemplate.appendChild(getCardContent());
+		cardTemplate.appendChild(getCardContent(cardTemplate.id));
 		cards.push(cardTemplate);
 
 		// groupElement.childNodes = cards;
 
-		groupElement.insertBefore(cardTemplate, addCardElement);
+		var parent = event.target.parentElement; 
+
+		parent.insertBefore(cardTemplate, parent.children[parent.children.length - 1]);
 	};
 
-	addCardElement.addEventListener('click', createNewCard, false);
+	Array.prototype.forEach.call(document.getElementsByClassName('group'), function (element) {
+		element.ondrop = cardDrop;
+		element.ondragover = function(event) { event.preventDefault(); };
+		//element.addEventListener('ondrop', cardDrop, false);
+		var elem = element.children[element.children.length - 1];
+		elem.addEventListener('click', createNewCard, false);
+		addCardElements.push(elem);
+	});	
 
 	window.onbeforeunload = function (e) {
 		e.preventDefault();
-		addCardElement.removeEventListener('click', createNewCard, false);
+
+		// Array.prototype.forEach.call(document.getElementsByClassName('group'), function (element) {
+		// 	element.removeEventListener('ondrop', cardDrop, false);
+		// });	
+
+		Array.prototype.forEach.call(addCardElements, function (element) {
+			element.removeEventListener('click', createNewCard, false);
+		});
 	};
 }());
