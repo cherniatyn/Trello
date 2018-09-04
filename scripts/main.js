@@ -5,12 +5,16 @@
 	var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
 		'July', 'August', 'September', 'October', 'November', 'December'];
+
+	var findElemFromArray = function (array, className) {
+		return array.find(function(value) {
+			return value.className === className;
+		});
+	};
 		
 	var cardDragStart = function(event) {
-		var card = event.path.find(function(value) {
-			if (value.className ==='card')
-				return true;
-		});
+		
+		var card = findElemFromArray(event.path, 'card');
 
 		event.dataTransfer.setData('elem', card.id);
 	};
@@ -18,12 +22,13 @@
 	var cardDrop = function(event) {
 		var card = event.dataTransfer.getData('elem');
 
-		var group = event.path.find(function(value) {
-			if (value.className ==='group')
-				return true;
-		});
+		var targetElem = findElemFromArray(event.path, 'card');
+		var group = findElemFromArray(event.path, 'group');
 
-		group.insertBefore(document.getElementById(card), group.children[group.children.length - 1]);
+		if (targetElem === null || targetElem === undefined)
+			targetElem = group.children[group.children.length - 1];
+
+		group.insertBefore(document.getElementById(card), targetElem);
 	};
 
 	var removeCard = function(event) {
