@@ -25,8 +25,8 @@
 		var targetElem = findElemFromArray(event.path, 'card');
 		var group = findElemFromArray(event.path, 'group');
 
-		if (targetElem === null || targetElem === undefined)
-			targetElem = group.children[group.children.length - 1];
+		// if (targetElem === null || targetElem === undefined)
+		// 	targetElem = group.children[group.children.length - 1];
 
 		group.insertBefore(document.getElementById(card), targetElem);
 	};
@@ -98,6 +98,7 @@
 		cardTemplate.classList.toggle('card');
 		cardTemplate.draggable = true;
 		cardTemplate.ondragstart = cardDragStart;
+		cardTemplate.ondrop = cardDrop;
 		//cardTemplate.addEventListener('ondragstart', cardDragStart, false);
 		cardTemplate.id = cards.length;
 		cardTemplate.appendChild(getRemoveBlock());
@@ -112,7 +113,7 @@
 	};
 
 	Array.prototype.forEach.call(document.getElementsByClassName('group'), function (element) {
-		element.ondrop = cardDrop;
+		//element.ondrop = cardDrop;
 		element.ondragover = function(event) { event.preventDefault(); };
 		//element.addEventListener('ondrop', cardDrop, false);
 		var elem = element.children[element.children.length - 1];
